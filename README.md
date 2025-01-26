@@ -1,33 +1,28 @@
-# 👋 Hello! Welcome to my Github profile.
-## My name is João Ângelo
-
-# About me:
-
-* Computer Science student at IFGoiano
-* Passionate about programmig, machine learning and Data Science
-
-# Language and Tools:
+<h2> Hello world, I'm João Ângelo! </h2>
+<a href="https://www.youtube.com/@joaoangelo3341" target="_blank"><img loading="lazy" src="https://img.icons8.com/?size=100&id=19318&format=png&color=000000)" width= "40" weight="40"> <a href = "mailto:contato@joaoangeloribeironunes"><img loading="lazy" src="https://img.icons8.com/?size=100&id=P7UIlhbpWzZm&format=png&color=000000" target="_blank" width="40" weight="40"></a>
+ <a href="https://www.linkedin.com/in/joao-angelo" target="_blank"><img loading="lazy" src="https://img.icons8.com/?size=100&id=xuvGCOXi8Wyg&format=png&color=000000" target="_blank" width="40" weight="40"></a>
 
 
-![C](https://img.shields.io/badge/C-00599C?style=for-the-badge&logo=c&logoColor=white) ![C++](https://img.shields.io/badge/C%2B%2B-00599C?style=for-the-badge&logo=c%2B%2B&logoColor=white) ![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white) ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54) ![Android](https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white) ![MySQL](https://img.shields.io/badge/MySQL-00000F?style=for-the-badge&logo=mysql&logoColor=white) ![SQLite](https://img.shields.io/badge/SQLite-000?style=for-the-badge&logo=sqlite&logoColor=07405E)
-          
+<h3>About me 🚀</h3>
+
+-  Computer Science student at IFGoiano.
+-  Passionate about programmig and I enjoy learning new things!
+  
+   
+
+
+<h3> Language and Tools:</h3>
+
+<img loading="lazy" src="https://img.icons8.com/?size=100&id=shQTXiDQiQVR&format=png&color=000000" width="40" weight="40"> <img loading="lazy" src="https://img.icons8.com/?size=100&id=40669&format=png&color=000000" width="40" weight="40"> <img loading="lazy" src="https://img.icons8.com/?size=100&id=13679&format=png&color=000000" width="40" weight="40"> <img loading="lazy" src="https://img.icons8.com/?size=100&id=l75OEUJkPAk4&format=png&color=000000" width="40" weight="40"> <img loading="lazy" src="https://img.icons8.com/?size=100&id=17836&format=png&color=000000" width="40" weight="40"> <img loading="lazy" src="https://img.icons8.com/?size=100&id=UFXRpPFebwa2&format=png&color=000000" width="40" weight="40"> <img loading="lazy" src="https://img.icons8.com/?size=100&id=VMRAbKfEzssG&format=png&color=000000)" width="40" weight="40">
           
           
 
 <div>
 <a href="https://github.com/joaoAngelo2">
-<img loading="lazy" height="180em" src="https://github-readme-stats.vercel.app/api/top-langs/?username=joaoAngelo2&layout=compact&langs_count=7&theme=dracula"/>
-<img loading="lazy" height="180em" src="https://github-readme-stats.vercel.app/api?username=joaoAngelo2&show_icons=true&theme=dracula&include_all_commits=true&count_private=true"/>
+<img loading="lazy" height="180em" src="https://github-readme-stats.vercel.app/api/top-langs/?username=joaoAngelo2&layout=compact&langs_count=7&theme=white"/>
 </div>
 
 
-# Reache me:
-
-<div>
-<a href="https://www.youtube.com/@joaoangelo3341" target="_blank"><img loading="lazy" src="https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white" target="_blank"></a>
-<a href = "mailto:contato@joaoangeloribeironunes"><img loading="lazy" src="https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white" target="_blank"></a>
-<a href="https://www.linkedin.com/in/joao-angelo" target="_blank"><img loading="lazy" src="https://img.shields.io/badge/-LinkedIn-%230077B5?style=for-the-badge&logo=linkedin&logoColor=white" target="_blank"></a>   
-</div>
 
 <!--
 **joaoAngelo2/joaoAngelo2** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
