@@ -13,7 +13,7 @@
 
 <h3> Language and Tools:</h3>
 
-<img loading="lazy" src="https://img.icons8.com/?size=100&id=shQTXiDQiQVR&format=png&color=000000" width="40" weight="40"> <img loading="lazy" src="https://img.icons8.com/?size=100&id=40669&format=png&color=000000" width="40" weight="40"> <img loading="lazy" src="https://img.icons8.com/?size=100&id=13679&format=png&color=000000" width="40" weight="40"> <img loading="lazy" src="https://img.icons8.com/?size=100&id=l75OEUJkPAk4&format=png&color=000000" width="40" weight="40"> <img loading="lazy" src="https://img.icons8.com/?size=100&id=17836&format=png&color=000000" width="40" weight="40"> <img loading="lazy" src="https://img.icons8.com/?size=100&id=UFXRpPFebwa2&format=png&color=000000" width="40" weight="40"> <img loading="lazy" src="https://img.icons8.com/?size=100&id=VMRAbKfEzssG&format=png&color=000000)" width="40" weight="40">
+<img loading="lazy" src="https://img.icons8.com/?size=100&id=shQTXiDQiQVR&format=png&color=000000" width="40" weight="40"> <img loading="lazy" src="https://img.icons8.com/?size=100&id=40669&format=png&color=000000" width="40" weight="40"> <img loading="lazy" src="https://img.icons8.com/?size=100&id=13679&format=png&color=000000" width="40" weight="40"> <img loading="lazy" src="https://img.icons8.com/?size=100&id=l75OEUJkPAk4&format=png&color=000000" width="40" weight="40"> <img loading="lazy" src="https://img.icons8.com/?size=100&id=17836&format=png&color=000000" width="40" weight="40"> <img loading="lazy" src="https://img.icons8.com/?size=100&id=UFXRpPFebwa2&format=png&color=000000" width="40" weight="40">
           
           
 
