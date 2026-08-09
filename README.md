@@ -1,40 +1,7 @@
-<h2> Hello world, I'm João Ângelo! </h2>
-<a href="https://www.youtube.com/@joaoangelo3341" target="_blank"><img loading="lazy" src="https://img.icons8.com/?size=100&id=19318&format=png&color=000000)" width= "40" weight="40"> <a href = "mailto:contato@joaoangeloribeironunes"><img loading="lazy" src="https://img.icons8.com/?size=100&id=P7UIlhbpWzZm&format=png&color=000000" target="_blank" width="40" weight="40"></a>
- <a href="https://www.linkedin.com/in/joao-angelo" target="_blank"><img loading="lazy" src="https://img.icons8.com/?size=100&id=xuvGCOXi8Wyg&format=png&color=000000" target="_blank" width="40" weight="40"></a>
+<img width="150" height="150" alt="TypeScript" src="https://github.com/user-attachments/assets/e4a83d99-82e1-4d15-986c-9546c5afebbe" /><h1 align="center">João Ângelo</h1>
 
+<p align="center" href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&duration=3000&pause=00&color=6FF3E9&center=true&vCenter=true&multiline=true&repeat=false&width=435&height=80&lines=Passionate+about+programming;and+I+enjoy+learning+new+things!" alt="Typing SVG" /><p>
+<p align="center">
+<img width="50" height="50" alt="React icon circling" src="https://github.com/user-attachments/assets/a62178e7-a24f-4423-b4b4-b9457ba53759" />
 
-<h3>About me 🚀</h3>
-
--  Computer Science student at IFGoiano.
--  Passionate about programmig and I enjoy learning new things!
-  
-   
-
-
-<h3> Language and Tools:</h3>
-
-<img loading="lazy" src="https://img.icons8.com/?size=100&id=shQTXiDQiQVR&format=png&color=000000" width="40" weight="40"> <img loading="lazy" src="https://img.icons8.com/?size=100&id=40669&format=png&color=000000" width="40" weight="40"> <img loading="lazy" src="https://img.icons8.com/?size=100&id=13679&format=png&color=000000" width="40" weight="40"> <img loading="lazy" src="https://img.icons8.com/?size=100&id=l75OEUJkPAk4&format=png&color=000000" width="40" weight="40"> <img loading="lazy" src="https://img.icons8.com/?size=100&id=17836&format=png&color=000000" width="40" weight="40"> <img loading="lazy" src="https://img.icons8.com/?size=100&id=UFXRpPFebwa2&format=png&color=000000" width="40" weight="40">
-          
-          
-
-<div>
-<a href="https://github.com/joaoAngelo2">
-<img loading="lazy" height="180em" src="https://github-readme-stats.vercel.app/api/top-langs/?username=joaoAngelo2&layout=compact&langs_count=7&theme=white"/>
-</div>
-
-
-
-<!--
-**joaoAngelo2/joaoAngelo2** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
-
-Here are some ideas to get you started:
-
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+</p>
