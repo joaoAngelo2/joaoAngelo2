@@ -5,7 +5,7 @@
   
 <p align="center">
   <a href="https://www.youtube.com/@joaoangeloribeiro">
-    <img width="40" height="40" src="https://raw.githubusercontent.com/joaoAngelo2/joaoAngelo2/main/images/icons8-reproduzir-youtube.svg" />
+    <img width="40" height="40" src="https://github.com/joaoAngelo2/joaoAngelo2/blob/main/images/icons8-reproduzir-youtube.svg" />
   </a>
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   <a href="https://www.linkedin.com/in/joao-angelo">
