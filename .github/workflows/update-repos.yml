@@ -1,0 +1,69 @@
+name: Update Repo Cards
+on:
+  schedule:
+    - cron: "0 */6 * * *"
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Generate repo cards
+        run: |
+          python3 << 'EOF'
+          import urllib.request
+          import json
+          import re
+
+          username = "joaoAngelo2"
+          token = "${{ secrets.GITHUB_TOKEN }}"
+          theme = "dark"
+
+          req = urllib.request.Request(
+            f"https://api.github.com/users/{username}/repos?per_page=100&sort=updated",
+            headers={"Authorization": f"token {token}", "Accept": "application/vnd.github.v3+json"}
+          )
+          repos = json.loads(urllib.request.urlopen(req).read())
+
+          sections = {
+            "react": ["JavaScript", "TypeScript"],
+            "typescript": ["TypeScript"],
+            "java": ["Java"],
+            "android": ["Kotlin", "Java"],
+          }
+
+          with open("README.md", "r") as f:
+            readme = f.read()
+
+          for section, langs in sections.items():
+            cards = ""
+            for repo in repos:
+              if repo.get("language") in langs and not repo.get("fork"):
+                name = repo["name"]
+                cards += f'<img src="https://github-readme-stats.vercel.app/api/pin/?username={username}&repo={name}&theme={theme}" />\n'
+            
+            if not cards:
+              cards = "_Nenhum repositório encontrado._\n"
+
+            readme = re.sub(
+              f"<!--START_SECTION:{section}-->.*?<!--END_SECTION:{section}-->",
+              f"<!--START_SECTION:{section}-->\n{cards}<!--END_SECTION:{section}-->",
+              readme,
+              flags=re.DOTALL
+            )
+
+          with open("README.md", "w") as f:
+            f.write(readme)
+          EOF
+
+      - name: Commit changes
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git add README.md
+          git diff --cached --quiet || git commit -m "update repo cards"
+          git push
