@@ -78,7 +78,7 @@ jobs:
           ) as output:
               output.write(
                   "repos=" +
-                  json.dumps(json.dumps(result)) +
+                  json.dumps(result) +
                   "\n"
               )
           PY
