@@ -8,6 +8,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: profile-readme-updates
+  cancel-in-progress: false
+
 jobs:
   update:
     runs-on: ubuntu-latest
@@ -16,141 +20,318 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Find repositories
-        id: repos
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          python3 << 'PY'
-          import json
-          import os
-          import urllib.request
-
-          username = "joaoAngelo2"
-
-          url = (
-              f"https://api.github.com/users/{username}/repos"
-              "?per_page=100&sort=updated"
-          )
-
-          request = urllib.request.Request(
-              url,
-              headers={
-                  "Accept": "application/vnd.github+json",
-                  "Authorization": f"Bearer {os.environ['GH_TOKEN']}",
-                  "User-Agent": "github-actions"
-              }
-          )
-
-          with urllib.request.urlopen(request) as response:
-              repos = json.loads(response.read())
-
-          sections = {
-              "react": ["JavaScript", "TypeScript"],
-              "typescript": ["TypeScript"],
-              "java": ["Java"],
-              "android": ["Kotlin", "Java"]
-          }
-
-          result = []
-
-          for section, languages in sections.items():
-              for repo in repos:
-                  if repo.get("fork"):
-                      continue
-
-                  if repo.get("language") not in languages:
-                      continue
-
-                  result.append({
-                      "name": repo["name"],
-                      "section": section
-                  })
-
-          with open(
-              os.environ["GITHUB_OUTPUT"],
-              "a",
-              encoding="utf-8"
-          ) as output:
-              output.write(
-                  "repos=" +
-                  json.dumps(json.dumps(result)) +
-                  "\n"
-              )
-          PY
-
-      - name: Create profile directory
-        run: mkdir -p profile
-
       - name: Generate repository cards
         env:
-          REPOS: ${{ steps.repos.outputs.repos }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          python3 << 'PY'
-          import json
-          import os
-          import subprocess
-
-          repos = json.loads(os.environ["REPOS"])
-
-          for repo in repos:
-              name = repo["name"]
-              section = repo["section"]
-
-              output = f"profile/{section}-{name}.svg"
-
-              print(f"Generating {output}")
-
-              subprocess.run([
-                  "gh", "api",
-                  f"/repos/joaoAngelo2/{name}"
-              ], check=True, stdout=subprocess.DEVNULL)
-
-              subprocess.run([
-                  "docker", "run", "--rm",
-                  "-e", "PAT_1=" + os.environ["GH_TOKEN"],
-                  "ghcr.io/anuraghazra/github-readme-stats:latest"
-              ], check=False)
-          PY
-
-      - name: Update README
-        env:
-          REPOS: ${{ steps.repos.outputs.repos }}
         run: |
           python3 << 'PY'
           import json
           import os
           import re
+          import urllib.parse
+          import urllib.request
+          from html import escape
+          from pathlib import Path
 
-          repos = json.loads(os.environ["REPOS"])
+          USERNAME = "joaoAngelo2"
+
+          SECTIONS = {
+              "react": ["JavaScript", "TypeScript"],
+              "typescript": ["TypeScript"],
+              "java": ["Java"],
+              "android": ["Kotlin", "Java"],
+          }
+
+          PROFILE_DIR = Path("profile")
+          PROFILE_DIR.mkdir(parents=True, exist_ok=True)
+
+          TOKEN = os.environ["GH_TOKEN"]
+
+          def github_api(url):
+              request = urllib.request.Request(
+                  url,
+                  headers={
+                      "Accept": "application/vnd.github+json",
+                      "Authorization": f"Bearer {TOKEN}",
+                      "User-Agent": "github-actions",
+                      "X-GitHub-Api-Version": "2026-03-10",
+                  },
+              )
+
+              with urllib.request.urlopen(request) as response:
+                  return json.loads(response.read())
+
+          def safe_filename(name):
+              return re.sub(r"[^A-Za-z0-9._-]", "-", name)
+
+          def create_card(repo, section):
+              name = repo["name"]
+              description = repo.get("description") or "No description provided."
+              language = repo.get("language") or "Other"
+
+              stars = repo.get("stargazers_count", 0)
+              forks = repo.get("forks_count", 0)
+
+              repo_url = repo["html_url"]
+
+              # Limit description so the SVG does not become enormous.
+              description = description.replace("\n", " ").strip()
+
+              if len(description) > 90:
+                  description = description[:87] + "..."
+
+              # XML escaping.
+              safe_name = escape(name)
+              safe_description = escape(description)
+              safe_language = escape(language)
+
+              # Colors by section.
+              colors = {
+                  "react": "#61DAFB",
+                  "typescript": "#3178C6",
+                  "java": "#F89820",
+                  "android": "#3DDC84",
+              }
+
+              accent = colors.get(section, "#58A6FF")
+
+              # SVG dimensions.
+              width = 800
+              height = 210
+
+              svg = f'''<svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="{width}"
+                height="{height}"
+                viewBox="0 0 {width} {height}"
+                role="img"
+                aria-label="{safe_name} repository card"
+              >
+                <defs>
+                  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0%" stop-color="#161b22"/>
+                    <stop offset="100%" stop-color="#0d1117"/>
+                  </linearGradient>
+                </defs>
+
+                <rect
+                  x="1"
+                  y="1"
+                  width="798"
+                  height="208"
+                  rx="18"
+                  fill="url(#bg)"
+                  stroke="#30363d"
+                  stroke-width="2"
+                />
+
+                <rect
+                  x="1"
+                  y="1"
+                  width="8"
+                  height="208"
+                  rx="4"
+                  fill="{accent}"
+                />
+
+                <text
+                  x="35"
+                  y="58"
+                  fill="#f0f6fc"
+                  font-family="Arial, Helvetica, sans-serif"
+                  font-size="30"
+                  font-weight="700"
+                >
+                  {safe_name}
+                </text>
+
+                <text
+                  x="35"
+                  y="94"
+                  fill="#8b949e"
+                  font-family="Arial, Helvetica, sans-serif"
+                  font-size="17"
+                >
+                  {safe_description}
+                </text>
+
+                <circle
+                  cx="43"
+                  cy="140"
+                  r="7"
+                  fill="{accent}"
+                />
+
+                <text
+                  x="60"
+                  y="146"
+                  fill="#c9d1d9"
+                  font-family="Arial, Helvetica, sans-serif"
+                  font-size="16"
+                >
+                  {safe_language}
+                </text>
+
+                <text
+                  x="260"
+                  y="146"
+                  fill="#c9d1d9"
+                  font-family="Arial, Helvetica, sans-serif"
+                  font-size="16"
+                >
+                  ★ {stars}
+                </text>
+
+                <text
+                  x="390"
+                  y="146"
+                  fill="#c9d1d9"
+                  font-family="Arial, Helvetica, sans-serif"
+                  font-size="16"
+                >
+                  ⑂ {forks}
+                </text>
+
+                <text
+                  x="35"
+                  y="185"
+                  fill="#58a6ff"
+                  font-family="Arial, Helvetica, sans-serif"
+                  font-size="14"
+                >
+                  github.com/{escape(USERNAME)}/{safe_name}
+                </text>
+              </svg>
+              '''
+
+              filename = PROFILE_DIR / f"{section}-{safe_filename(name)}.svg"
+
+              filename.write_text(svg, encoding="utf-8")
+
+              return filename
+
+          print(f"Fetching repositories for {USERNAME}...")
+
+          repositories = []
+
+          for page in range(1, 10):
+              url = (
+                  f"https://api.github.com/users/{USERNAME}/repos"
+                  f"?per_page=100&page={page}&sort=updated"
+              )
+
+              page_repos = github_api(url)
+
+              if not page_repos:
+                  break
+
+              repositories.extend(page_repos)
+
+              if len(page_repos) < 100:
+                  break
+
+          print(f"Found {len(repositories)} repositories.")
+
+          # Remove old generated cards.
+          for old_file in PROFILE_DIR.glob("*.svg"):
+              old_file.unlink()
+
+          selected = []
+
+          for section, languages in SECTIONS.items():
+              for repo in repositories:
+
+                  # Ignore forks.
+                  if repo.get("fork"):
+                      continue
+
+                  language = repo.get("language")
+
+                  if language not in languages:
+                      continue
+
+                  selected.append({
+                      "name": repo["name"],
+                      "section": section,
+                      "language": language,
+                  })
+
+                  output = create_card(repo, section)
+
+                  print(f"Generated: {output}")
+
+          # Save metadata for the README step.
+          Path("profile/repos.json").write_text(
+              json.dumps(selected, indent=2),
+              encoding="utf-8",
+          )
+
+          print(f"Generated {len(selected)} repository cards.")
+          PY
+
+      - name: Update README
+        run: |
+          python3 << 'PY'
+          import json
+          import re
+          from pathlib import Path
+
+          repos_file = Path("profile/repos.json")
+
+          if not repos_file.exists():
+              raise SystemExit("profile/repos.json was not generated.")
+
+          repos = json.loads(
+              repos_file.read_text(encoding="utf-8")
+          )
 
           sections = {
               "react": [],
               "typescript": [],
               "java": [],
-              "android": []
+              "android": [],
           }
 
           for repo in repos:
               name = repo["name"]
               section = repo["section"]
 
-              path = f"profile/{section}-{name}.svg"
+              safe_name = re.sub(
+                  r"[^A-Za-z0-9._-]",
+                  "-",
+                  name
+              )
 
-              if os.path.exists(path):
-                  sections[section].append(path)
+              path = f"profile/{section}-{safe_name}.svg"
 
-          with open("README.md", "r", encoding="utf-8") as file:
-              readme = file.read()
+              if Path(path).exists():
+                  sections[section].append(
+                      (name, path)
+                  )
+
+          readme_path = Path("README.md")
+
+          if not readme_path.exists():
+              raise SystemExit("README.md not found.")
+
+          readme = readme_path.read_text(
+              encoding="utf-8"
+          )
 
           for section, cards in sections.items():
 
               content = ""
 
-              for path in cards:
+              for name, path in cards:
+                  url = (
+                      "https://github.com/joaoAngelo2/"
+                      + name
+                  )
+
                   content += (
-                      f'<img src="{path}" width="400" />\n'
+                      f'<a href="{url}">'
+                      f'<img src="{path}" width="400" />'
+                      f'</a>\n'
                   )
 
               pattern = (
@@ -165,16 +346,31 @@ jobs:
                   f"<!--END_SECTION:{section}-->"
               )
 
-              readme = re.sub(
+              new_readme, count = re.subn(
                   pattern,
                   replacement,
                   readme,
                   flags=re.DOTALL
               )
 
-          with open("README.md", "w", encoding="utf-8") as file:
-              file.write(readme)
+              if count == 0:
+                  print(
+                      f"WARNING: markers for "
+                      f"{section} not found."
+                  )
+              else:
+                  readme = new_readme
+
+          readme_path.write_text(
+              readme,
+              encoding="utf-8"
+          )
+
+          print("README.md updated.")
           PY
+
+      - name: Remove metadata file
+        run: rm -f profile/repos.json
 
       - name: Commit changes
         run: |
@@ -188,5 +384,5 @@ jobs:
             exit 0
           fi
 
-          git commit -m "update repo cards"
+          git commit -m "chore: update repository cards"
           git push
