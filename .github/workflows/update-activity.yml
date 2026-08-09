@@ -15,17 +15,14 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           fetch-depth: 0
 
-      - name: Generate activity SVG
+      - name: Write script
         run: |
-          python3 << 'EOF'
-          import urllib.request
-          import json
-          import re
-          import os
+          cat > /tmp/gen_activity.py << 'PYEOF'
+          import urllib.request, json, re, os
           from datetime import datetime, timezone
 
           username = "joaoAngelo2"
-          token = "${{ secrets.GITHUB_TOKEN }}"
+          token = os.environ["GH_TOKEN"]
 
           headers = {
             "Authorization": f"token {token}",
@@ -47,14 +44,14 @@ jobs:
             return f"{s // 86400}d ago"
 
           EVENT_TYPE = {
-            "PushEvent":                ("PUSH",   "#6FF3E9"),
-            "PullRequestEvent":         ("PR",     "#A97BFF"),
-            "IssuesEvent":              ("ISSUE",  "#f1e05a"),
-            "PullRequestReviewEvent":   ("REVIEW", "#3178c6"),
-            "WatchEvent":               ("STAR",   "#f1e05a"),
-            "ForkEvent":                ("FORK",   "#8b949e"),
-            "CreateEvent":              ("CREATE", "#6FF3E9"),
-            "IssueCommentEvent":        ("COMMENT","#8b949e"),
+            "PushEvent":              ("PUSH",    "#6FF3E9"),
+            "PullRequestEvent":       ("PR",      "#A97BFF"),
+            "IssuesEvent":            ("ISSUE",   "#f1e05a"),
+            "PullRequestReviewEvent": ("REVIEW",  "#3178c6"),
+            "WatchEvent":             ("STAR",    "#f1e05a"),
+            "ForkEvent":              ("FORK",    "#8b949e"),
+            "CreateEvent":            ("CREATE",  "#6FF3E9"),
+            "IssueCommentEvent":      ("COMMENT", "#8b949e"),
           }
 
           def event_message(e):
@@ -65,7 +62,7 @@ jobs:
               n = len(p.get("commits", []))
               msg = p.get("commits", [{}])[-1].get("message", "")
               msg = msg.split("\n")[0][:35]
-              return f"{n} commit{'s' if n != 1 else ''} → {repo}: {msg}"
+              return f"{n} commit{'s' if n != 1 else ''} to {repo}: {msg}"
             if t == "PullRequestEvent":
               pr = p.get("pull_request", {})
               return f"{p.get('action','')} #{pr.get('number','')} {pr.get('title','')[:30]}"
@@ -85,8 +82,8 @@ jobs:
               return f"commented on #{p.get('issue',{}).get('number','')} in {repo}"
             return repo
 
-          def escape(s):
-            return s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace('"', "&quot;")
+          def esc(s):
+            return str(s).replace("&","&amp;").replace("<","&lt;").replace(">","&gt;").replace('"',"&quot;")
 
           events = gh(f"https://api.github.com/users/{username}/events/public?per_page=30")
 
@@ -95,8 +92,8 @@ jobs:
             if e["type"] not in EVENT_TYPE:
               continue
             label, color = EVENT_TYPE[e["type"]]
-            msg = escape(event_message(e))
-            ago = time_ago(e["created_at"])
+            msg = esc(event_message(e))
+            ago = esc(time_ago(e["created_at"]))
             lines.append((ago, label, color, msg))
             if len(lines) == 7:
               break
@@ -107,26 +104,29 @@ jobs:
           PAD_BOT = 16
           H = PAD_TOP + LINE_H * len(lines) + PAD_BOT
 
-          rows_svg = ""
+          rows = ""
           for i, (ago, label, color, msg) in enumerate(lines):
             y = PAD_TOP + i * LINE_H + 16
-            bg = "#0d1117" if i % 2 == 0 else "#0d1117"
-            rows_svg += f'''  <text x="18" y="{y}" font-family="JetBrains Mono,monospace" font-size="11" fill="#484f58">{escape(ago)}</text>
-  <text x="88" y="{y}" font-family="JetBrains Mono,monospace" font-size="11" font-weight="500" fill="{color}">{label}</text>
-  <text x="158" y="{y}" font-family="JetBrains Mono,monospace" font-size="11" fill="#8b949e">{msg}</text>
-'''
+            rows += (
+              f'  <text x="18"  y="{y}" font-family="JetBrains Mono,monospace" font-size="11" fill="#484f58">{ago}</text>\n'
+              f'  <text x="88"  y="{y}" font-family="JetBrains Mono,monospace" font-size="11" font-weight="500" fill="{color}">{label}</text>\n'
+              f'  <text x="158" y="{y}" font-family="JetBrains Mono,monospace" font-size="11" fill="#8b949e">{msg}</text>\n'
+            )
 
-          svg = f'''<svg width="{W}" height="{H}" viewBox="0 0 {W} {H}" xmlns="http://www.w3.org/2000/svg">
-  <rect width="{W}" height="{H}" rx="8" fill="#0d1117" stroke="#30363d" stroke-width="1"/>
-  <rect width="{W}" height="34" rx="8" fill="#161b22"/>
-  <rect y="26" width="{W}" height="8" fill="#161b22"/>
-  <rect x="0" y="33" width="{W}" height="1" fill="#30363d"/>
-  <circle cx="18" cy="17" r="5" fill="#ff5f57"/>
-  <circle cx="34" cy="17" r="5" fill="#febc2e"/>
-  <circle cx="50" cy="17" r="5" fill="#28c840"/>
-  <text x="75" y="21" font-family="JetBrains Mono,monospace" font-size="11" fill="#484f58">activity.log — joaoAngelo2</text>
-{rows_svg}
-</svg>'''
+          svg_parts = [
+            f'<svg width="{W}" height="{H}" viewBox="0 0 {W} {H}" xmlns="http://www.w3.org/2000/svg">',
+            f'  <rect width="{W}" height="{H}" rx="8" fill="#0d1117" stroke="#30363d" stroke-width="1"/>',
+            f'  <rect width="{W}" height="34" rx="8" fill="#161b22"/>',
+            f'  <rect y="26" width="{W}" height="8" fill="#161b22"/>',
+            f'  <rect x="0" y="33" width="{W}" height="1" fill="#30363d"/>',
+            f'  <circle cx="18" cy="17" r="5" fill="#ff5f57"/>',
+            f'  <circle cx="34" cy="17" r="5" fill="#febc2e"/>',
+            f'  <circle cx="50" cy="17" r="5" fill="#28c840"/>',
+            f'  <text x="75" y="21" font-family="JetBrains Mono,monospace" font-size="11" fill="#484f58">activity.log — {username}</text>',
+            rows,
+            '</svg>',
+          ]
+          svg = "\n".join(svg_parts)
 
           os.makedirs(".github/cards", exist_ok=True)
           with open(".github/cards/activity.svg", "w") as f:
@@ -147,7 +147,12 @@ jobs:
             f.write(readme)
 
           print("Activity SVG gerado.")
-          EOF
+          PYEOF
+
+      - name: Run script
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python3 /tmp/gen_activity.py
 
       - name: Commit changes
         run: |
