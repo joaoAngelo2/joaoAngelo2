@@ -1,17 +1,80 @@
-name: Update README
+name: Update Repo Cards
+
 on:
   schedule:
-    - cron: "*/30 * * * *"
+    - cron: "0 */6 * * *"
   workflow_dispatch:
+
 jobs:
-  build:
-    name: Update this repo's README with recent activity
+  update:
     runs-on: ubuntu-latest
     permissions:
       contents: write
 
     steps:
       - uses: actions/checkout@v4
-      - uses: jamesgeorge007/github-activity-readme@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Generate repo cards
+        run: |
+          python3 << 'EOF'
+          import urllib.request
+          import json
+          import re
+
+          username = "joaoAngelo2"
+          theme = "dark"
+
+          req = urllib.request.Request(
+            f"https://api.github.com/users/{username}/repos?per_page=100&sort=updated",
+            headers={
+              "Accept": "application/vnd.github+json",
+              "User-Agent": "github-actions"
+            }
+          )
+
+          with urllib.request.urlopen(req) as response:
+              repos = json.loads(response.read())
+
+          sections = {
+            "react": ["JavaScript", "TypeScript"],
+            "typescript": ["TypeScript"],
+            "java": ["Java"],
+            "android": ["Kotlin", "Java"],
+          }
+
+          with open("README.md", "r", encoding="utf-8") as f:
+              readme = f.read()
+
+          for section, langs in sections.items():
+              cards = ""
+
+              for repo in repos:
+                  if repo.get("language") in langs and not repo.get("fork"):
+                      name = repo["name"]
+
+                      cards += (
+                          f'<img src="https://github-readme-stats.vercel.app/api/pin/'
+                          f'?username={username}&repo={name}&theme={theme}" />\n'
+                      )
+
+              if not cards:
+                  cards = "_Nenhum repositório encontrado._\n"
+
+              readme = re.sub(
+                  f"<!--START_SECTION:{section}-->.*?<!--END_SECTION:{section}-->",
+                  f"<!--START_SECTION:{section}-->\n{cards}<!--END_SECTION:{section}-->",
+                  readme,
+                  flags=re.DOTALL
+              )
+
+          with open("README.md", "w", encoding="utf-8") as f:
+              f.write(readme)
+          EOF
+
+      - name: Commit changes
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git add README.md
+          git diff --cached --quiet || git commit -m "update repo cards"
+          git push
