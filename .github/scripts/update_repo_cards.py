@@ -121,7 +121,7 @@ for section, criteria in sections.items():
         with open(svg_path, "w") as f:
             f.write(svg)
 
-        cards_md += f'<img src="{svg_path}" alt="{name}" />\n'
+        cards_md += f'<a href="https://github.com/{username}/{name}"><img src="{svg_path}" alt="{name}" /></a>\n'
 
     if not cards_md:
         cards_md = "_Nenhum repositório encontrado._\n"
