@@ -5,18 +5,19 @@ on:
     - cron: "*/30 * * * *"
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build:
-    name: Update this repo's README with recent activity
+    name: Update README with recent activity
     runs-on: ubuntu-latest
 
-    permissions:
-      contents: write
-
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
       - name: Update activity
-        uses: jamesgeorge007/github-activity-readme@master
+        uses: Readme-Workflows/recent-activity@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
