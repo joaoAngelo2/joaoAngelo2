@@ -1,4 +1,5 @@
 name: Update Repo Cards
+
 on:
   schedule:
     - cron: "0 */6 * * *"
@@ -9,6 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+
     steps:
       - uses: actions/checkout@v4
 
@@ -20,14 +22,18 @@ jobs:
           import re
 
           username = "joaoAngelo2"
-          token = "${{ secrets.GITHUB_TOKEN }}"
           theme = "dark"
 
           req = urllib.request.Request(
             f"https://api.github.com/users/{username}/repos?per_page=100&sort=updated",
-            headers={"Authorization": f"token {token}", "Accept": "application/vnd.github.v3+json"}
+            headers={
+              "Accept": "application/vnd.github+json",
+              "User-Agent": "github-actions"
+            }
           )
-          repos = json.loads(urllib.request.urlopen(req).read())
+
+          with urllib.request.urlopen(req) as response:
+              repos = json.loads(response.read())
 
           sections = {
             "react": ["JavaScript", "TypeScript"],
@@ -36,28 +42,33 @@ jobs:
             "android": ["Kotlin", "Java"],
           }
 
-          with open("README.md", "r") as f:
-            readme = f.read()
+          with open("README.md", "r", encoding="utf-8") as f:
+              readme = f.read()
 
           for section, langs in sections.items():
-            cards = ""
-            for repo in repos:
-              if repo.get("language") in langs and not repo.get("fork"):
-                name = repo["name"]
-                cards += f'<img src="https://github-readme-stats.vercel.app/api/pin/?username={username}&repo={name}&theme={theme}" />\n'
-            
-            if not cards:
-              cards = "_Nenhum repositório encontrado._\n"
+              cards = ""
 
-            readme = re.sub(
-              f"<!--START_SECTION:{section}-->.*?<!--END_SECTION:{section}-->",
-              f"<!--START_SECTION:{section}-->\n{cards}<!--END_SECTION:{section}-->",
-              readme,
-              flags=re.DOTALL
-            )
+              for repo in repos:
+                  if repo.get("language") in langs and not repo.get("fork"):
+                      name = repo["name"]
 
-          with open("README.md", "w") as f:
-            f.write(readme)
+                      cards += (
+                          f'<img src="https://github-readme-stats.vercel.app/api/pin/'
+                          f'?username={username}&repo={name}&theme={theme}" />\n'
+                      )
+
+              if not cards:
+                  cards = "_Nenhum repositório encontrado._\n"
+
+              readme = re.sub(
+                  f"<!--START_SECTION:{section}-->.*?<!--END_SECTION:{section}-->",
+                  f"<!--START_SECTION:{section}-->\n{cards}<!--END_SECTION:{section}-->",
+                  readme,
+                  flags=re.DOTALL
+              )
+
+          with open("README.md", "w", encoding="utf-8") as f:
+              f.write(readme)
           EOF
 
       - name: Commit changes
