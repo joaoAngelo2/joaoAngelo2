@@ -65,4 +65,5 @@ _Nenhum repositório encontrado._
 <h2>📊&nbsp;&nbsp;Activity</h2>
 
 <!--START_SECTION:activity-->
+<img src=".github/cards/activity.svg" alt="activity log" />
 <!--END_SECTION:activity-->
