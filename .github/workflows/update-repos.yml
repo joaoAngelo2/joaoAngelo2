@@ -5,76 +5,196 @@ on:
     - cron: "0 */6 * * *"
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
-  update:
+  discover:
+    name: Find repositories
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
+
+    outputs:
+      repos: ${{ steps.repos.outputs.repos }}
 
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Generate repo cards
+      - name: Find repositories
+        id: repos
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          python3 << 'EOF'
-          import urllib.request
+          python3 << 'PY'
           import json
-          import re
+          import os
+          import urllib.request
 
           username = "joaoAngelo2"
-          theme = "dark"
 
-          req = urllib.request.Request(
-            f"https://api.github.com/users/{username}/repos?per_page=100&sort=updated",
-            headers={
-              "Accept": "application/vnd.github+json",
-              "User-Agent": "github-actions"
-            }
+          url = (
+              f"https://api.github.com/users/{username}/repos"
+              "?per_page=100&sort=updated"
           )
 
-          with urllib.request.urlopen(req) as response:
+          request = urllib.request.Request(
+              url,
+              headers={
+                  "Accept": "application/vnd.github+json",
+                  "Authorization": f"Bearer {os.environ['GH_TOKEN']}",
+                  "User-Agent": "github-actions"
+              }
+          )
+
+          with urllib.request.urlopen(request) as response:
               repos = json.loads(response.read())
 
           sections = {
-            "react": ["JavaScript", "TypeScript"],
-            "typescript": ["TypeScript"],
-            "java": ["Java"],
-            "android": ["Kotlin", "Java"],
+              "react": ["JavaScript", "TypeScript"],
+              "typescript": ["TypeScript"],
+              "java": ["Java"],
+              "android": ["Kotlin", "Java"]
           }
 
-          with open("README.md", "r", encoding="utf-8") as f:
-              readme = f.read()
+          result = []
 
-          for section, langs in sections.items():
-              cards = ""
-
+          for section, languages in sections.items():
               for repo in repos:
-                  if repo.get("language") in langs and not repo.get("fork"):
-                      name = repo["name"]
 
-                      cards += (
-                          f'<img src="https://github-readme-stats.vercel.app/api/pin/'
-                          f'?username={username}&repo={name}&theme={theme}" />\n'
-                      )
+                  if repo.get("fork"):
+                      continue
 
-              if not cards:
-                  cards = "_Nenhum repositório encontrado._\n"
+                  if repo.get("language") not in languages:
+                      continue
+
+                  result.append({
+                      "name": repo["name"],
+                      "section": section
+                  })
+
+          print(json.dumps(result))
+
+          with open(
+              os.environ["GITHUB_OUTPUT"],
+              "a",
+              encoding="utf-8"
+          ) as output:
+              output.write(
+                  "repos=" +
+                  json.dumps(json.dumps(result)) +
+                  "\n"
+              )
+          PY
+
+  generate:
+    name: Generate cards
+    needs: discover
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        repo: ${{ fromJSON(needs.discover.outputs.repos) }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Generate repository card
+        uses: stats-organization/github-readme-stats-action@v2
+        with:
+          card: pin
+          options: username=joaoAngelo2&repo=${{ matrix.repo.name }}&theme=dark
+          path: profile/${{ matrix.repo.section }}-${{ matrix.repo.name }}.svg
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fail_on_error: true
+
+  update-readme:
+    name: Update README
+    needs:
+      - discover
+      - generate
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Update README
+        env:
+          REPOS: ${{ needs.discover.outputs.repos }}
+        run: |
+          python3 << 'PY'
+          import json
+          import os
+          import re
+
+          repos = json.loads(os.environ["REPOS"])
+
+          sections = {
+              "react": [],
+              "typescript": [],
+              "java": [],
+              "android": []
+          }
+
+          for repo in repos:
+              name = repo["name"]
+              section = repo["section"]
+
+              path = f"profile/{section}-{name}.svg"
+
+              if os.path.exists(path):
+                  sections[section].append(path)
+
+          with open("README.md", "r", encoding="utf-8") as file:
+              readme = file.read()
+
+          for section, cards in sections.items():
+
+              content = ""
+
+              for path in cards:
+                  content += (
+                      f'<img src="{path}" '
+                      f'width="400" />\n'
+                  )
+
+              if not content:
+                  content = "No repositories found.\n"
+
+              pattern = (
+                  rf"<!--START_SECTION:{section}-->"
+                  rf".*?"
+                  rf"<!--END_SECTION:{section}-->"
+              )
+
+              replacement = (
+                  f"<!--START_SECTION:{section}-->\n"
+                  f"{content}"
+                  f"<!--END_SECTION:{section}-->"
+              )
 
               readme = re.sub(
-                  f"<!--START_SECTION:{section}-->.*?<!--END_SECTION:{section}-->",
-                  f"<!--START_SECTION:{section}-->\n{cards}<!--END_SECTION:{section}-->",
+                  pattern,
+                  replacement,
                   readme,
                   flags=re.DOTALL
               )
 
-          with open("README.md", "w", encoding="utf-8") as f:
-              f.write(readme)
-          EOF
+          with open("README.md", "w", encoding="utf-8") as file:
+              file.write(readme)
+          PY
 
       - name: Commit changes
         run: |
-          git config --global user.name "github-actions"
-          git config --global user.email "github-actions@github.com"
-          git add README.md
-          git diff --cached --quiet || git commit -m "update repo cards"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add README.md profile/
+
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+
+          git commit -m "update repo cards"
           git push
