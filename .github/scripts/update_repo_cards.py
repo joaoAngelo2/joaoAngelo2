@@ -10,7 +10,7 @@ token = os.environ.get("GITHUB_TOKEN", "")
 
 headers = {
     "Authorization": f"token {token}",
-    "Accept": "application/vnd.github.v3+json"
+    "Accept": "application/vnd.github.mercy-preview+json"
 }
 
 def gh(url):
@@ -96,7 +96,12 @@ for section, criteria in sections.items():
         namel = name.lower()
         lang_match = lang in criteria["langs"]
         if section == "react":
-            if not (lang_match and any(kw in namel for kw in criteria["keywords"])):
+            desc_lower   = (repo.get("description") or "").lower()
+            topics       = repo.get("topics", [])
+            name_match   = any(kw in namel     for kw in criteria["keywords"])
+            desc_match   = any(kw in desc_lower for kw in criteria["keywords"])
+            topics_match = any(kw in topic      for kw in criteria["keywords"] for topic in topics)
+            if not (lang_match and (name_match or desc_match or topics_match)):
                 continue
         else:
             if not lang_match:
