@@ -27,6 +27,10 @@
 <summary>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<big><big><strong>React</strong></big></big>&nbsp;&nbsp;&nbsp;<img width="25" height="25" alt="React" src="https://github.com/joaoAngelo2/joaoAngelo2/blob/main/images/React.svg" /></summary>
 
 <!--START_SECTION:react-->
+<img src="https://github-readme-stats.vercel.app/api/pin/?username=joaoAngelo2&repo=chatbot-ifgoiano-ipora&theme=dark" />
+<img src="https://github-readme-stats.vercel.app/api/pin/?username=joaoAngelo2&repo=Caixeiro-Viajante&theme=dark" />
+<img src="https://github-readme-stats.vercel.app/api/pin/?username=joaoAngelo2&repo=barbie&theme=dark" />
+<img src="https://github-readme-stats.vercel.app/api/pin/?username=joaoAngelo2&repo=AJAX&theme=dark" />
 <!--END_SECTION:react-->
 </details>
 
@@ -34,6 +38,8 @@
 <summary>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<big><big><strong>TypeScript</strong></big></big>&nbsp;&nbsp;&nbsp;<img width="25" height="25" alt="TypeScript" src="https://github.com/joaoAngelo2/joaoAngelo2/blob/main/images/TypeScript.svg" /></summary>
 
 <!--START_SECTION:typescript-->
+<img src="https://github-readme-stats.vercel.app/api/pin/?username=joaoAngelo2&repo=Caixeiro-Viajante&theme=dark" />
+<img src="https://github-readme-stats.vercel.app/api/pin/?username=joaoAngelo2&repo=barbie&theme=dark" />
 <!--END_SECTION:typescript-->
 </details>
 
@@ -41,6 +47,10 @@
 <summary>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<big><big><strong>Java</strong></big></big>&nbsp;&nbsp;&nbsp;<img width="25" height="25" alt="Java" src="https://github.com/joaoAngelo2/joaoAngelo2/blob/main/images/Java.svg" /></summary>
 
 <!--START_SECTION:java-->
+<img src="https://github-readme-stats.vercel.app/api/pin/?username=joaoAngelo2&repo=compilador&theme=dark" />
+<img src="https://github-readme-stats.vercel.app/api/pin/?username=joaoAngelo2&repo=JavaEstudos&theme=dark" />
+<img src="https://github-readme-stats.vercel.app/api/pin/?username=joaoAngelo2&repo=GeoVoz&theme=dark" />
+<img src="https://github-readme-stats.vercel.app/api/pin/?username=joaoAngelo2&repo=Pilha-Est-tica-Java&theme=dark" />
 <!--END_SECTION:java-->
 </details>
 
@@ -48,6 +58,10 @@
 <summary>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<big><big><strong>Android</strong></big></big>&nbsp;&nbsp;&nbsp;<img width="25" height="25" alt="Android" src="https://github.com/joaoAngelo2/joaoAngelo2/blob/main/images/kGcHSrcQvP.svg" /></summary>
 
 <!--START_SECTION:android-->
+<img src="https://github-readme-stats.vercel.app/api/pin/?username=joaoAngelo2&repo=compilador&theme=dark" />
+<img src="https://github-readme-stats.vercel.app/api/pin/?username=joaoAngelo2&repo=JavaEstudos&theme=dark" />
+<img src="https://github-readme-stats.vercel.app/api/pin/?username=joaoAngelo2&repo=GeoVoz&theme=dark" />
+<img src="https://github-readme-stats.vercel.app/api/pin/?username=joaoAngelo2&repo=Pilha-Est-tica-Java&theme=dark" />
 <!--END_SECTION:android-->
 </details>
 
