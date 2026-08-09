@@ -1,0 +1,104 @@
+<svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="800"
+      height="210"
+      viewBox="0 0 800 210"
+      role="img"
+      aria-label="compilador repository card"
+    >
+      <defs>
+        <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#161b22"/>
+          <stop offset="100%" stop-color="#0d1117"/>
+        </linearGradient>
+      </defs>
+
+      <rect
+        x="1"
+        y="1"
+        width="798"
+        height="208"
+        rx="18"
+        fill="url(#bg)"
+        stroke="#30363d"
+        stroke-width="2"
+      />
+
+      <rect
+        x="1"
+        y="1"
+        width="8"
+        height="208"
+        rx="4"
+        fill="#F89820"
+      />
+
+      <text
+        x="35"
+        y="58"
+        fill="#f0f6fc"
+        font-family="Arial, Helvetica, sans-serif"
+        font-size="30"
+        font-weight="700"
+      >
+        compilador
+      </text>
+
+      <text
+        x="35"
+        y="94"
+        fill="#8b949e"
+        font-family="Arial, Helvetica, sans-serif"
+        font-size="17"
+      >
+        No description provided.
+      </text>
+
+      <circle
+        cx="43"
+        cy="140"
+        r="7"
+        fill="#F89820"
+      />
+
+      <text
+        x="60"
+        y="146"
+        fill="#c9d1d9"
+        font-family="Arial, Helvetica, sans-serif"
+        font-size="16"
+      >
+        Java
+      </text>
+
+      <text
+        x="260"
+        y="146"
+        fill="#c9d1d9"
+        font-family="Arial, Helvetica, sans-serif"
+        font-size="16"
+      >
+        ★ 1
+      </text>
+
+      <text
+        x="390"
+        y="146"
+        fill="#c9d1d9"
+        font-family="Arial, Helvetica, sans-serif"
+        font-size="16"
+      >
+        ⑂ 0
+      </text>
+
+      <text
+        x="35"
+        y="185"
+        fill="#58a6ff"
+        font-family="Arial, Helvetica, sans-serif"
+        font-size="14"
+      >
+        github.com/joaoAngelo2/compilador
+      </text>
+    </svg>
+    

@@ -27,6 +27,10 @@
 <summary>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<big><big><strong>React</strong></big></big>&nbsp;&nbsp;&nbsp;<img width="25" height="25" alt="React" src="https://github.com/joaoAngelo2/joaoAngelo2/blob/main/images/React.svg" /></summary>
 
 <!--START_SECTION:react-->
+<a href="https://github.com/joaoAngelo2/chatbot-ifgoiano-ipora"><img src="profile/react-chatbot-ifgoiano-ipora.svg" width="400" /></a>
+<a href="https://github.com/joaoAngelo2/Caixeiro-Viajante"><img src="profile/react-Caixeiro-Viajante.svg" width="400" /></a>
+<a href="https://github.com/joaoAngelo2/barbie"><img src="profile/react-barbie.svg" width="400" /></a>
+<a href="https://github.com/joaoAngelo2/AJAX"><img src="profile/react-AJAX.svg" width="400" /></a>
 <!--END_SECTION:react-->
 </details>
 
@@ -34,6 +38,8 @@
 <summary>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<big><big><strong>TypeScript</strong></big></big>&nbsp;&nbsp;&nbsp;<img width="25" height="25" alt="TypeScript" src="https://github.com/joaoAngelo2/joaoAngelo2/blob/main/images/TypeScript.svg" /></summary>
 
 <!--START_SECTION:typescript-->
+<a href="https://github.com/joaoAngelo2/Caixeiro-Viajante"><img src="profile/typescript-Caixeiro-Viajante.svg" width="400" /></a>
+<a href="https://github.com/joaoAngelo2/barbie"><img src="profile/typescript-barbie.svg" width="400" /></a>
 <!--END_SECTION:typescript-->
 </details>
 
@@ -41,6 +47,10 @@
 <summary>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<big><big><strong>Java</strong></big></big>&nbsp;&nbsp;&nbsp;<img width="25" height="25" alt="Java" src="https://github.com/joaoAngelo2/joaoAngelo2/blob/main/images/Java.svg" /></summary>
 
 <!--START_SECTION:java-->
+<a href="https://github.com/joaoAngelo2/compilador"><img src="profile/java-compilador.svg" width="400" /></a>
+<a href="https://github.com/joaoAngelo2/JavaEstudos"><img src="profile/java-JavaEstudos.svg" width="400" /></a>
+<a href="https://github.com/joaoAngelo2/GeoVoz"><img src="profile/java-GeoVoz.svg" width="400" /></a>
+<a href="https://github.com/joaoAngelo2/Pilha-Est-tica-Java"><img src="profile/java-Pilha-Est-tica-Java.svg" width="400" /></a>
 <!--END_SECTION:java-->
 </details>
 
@@ -48,6 +58,10 @@
 <summary>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<big><big><strong>Android</strong></big></big>&nbsp;&nbsp;&nbsp;<img width="25" height="25" alt="Android" src="https://github.com/joaoAngelo2/joaoAngelo2/blob/main/images/kGcHSrcQvP.svg" /></summary>
 
 <!--START_SECTION:android-->
+<a href="https://github.com/joaoAngelo2/compilador"><img src="profile/android-compilador.svg" width="400" /></a>
+<a href="https://github.com/joaoAngelo2/JavaEstudos"><img src="profile/android-JavaEstudos.svg" width="400" /></a>
+<a href="https://github.com/joaoAngelo2/GeoVoz"><img src="profile/android-GeoVoz.svg" width="400" /></a>
+<a href="https://github.com/joaoAngelo2/Pilha-Est-tica-Java"><img src="profile/android-Pilha-Est-tica-Java.svg" width="400" /></a>
 <!--END_SECTION:android-->
 </details>
 
