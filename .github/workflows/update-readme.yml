@@ -8,6 +8,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: profile-readme-updates
+  cancel-in-progress: false
+
 jobs:
   build:
     name: Update README with recent activity
@@ -21,3 +25,18 @@ jobs:
         uses: Readme-Workflows/recent-activity@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add README.md
+
+          if git diff --cached --quiet; then
+            echo "No activity changes to commit."
+            exit 0
+          fi
+
+          git commit -m "chore: update recent activity"
+          git push
