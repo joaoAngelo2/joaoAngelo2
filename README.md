@@ -35,8 +35,8 @@ _Nenhum repositório encontrado._
 <summary>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<big><big><strong>TypeScript</strong></big></big>&nbsp;&nbsp;&nbsp;<img width="25" height="25" alt="TypeScript" src="https://github.com/joaoAngelo2/joaoAngelo2/blob/main/images/TypeScript.svg" /></summary>
 
 <!--START_SECTION:typescript-->
-<img src=".github/cards/typescript_Caixeiro-Viajante.svg" alt="Caixeiro-Viajante" />
-<img src=".github/cards/typescript_barbie.svg" alt="barbie" />
+<a href="https://github.com/joaoAngelo2/Caixeiro-Viajante"><img src=".github/cards/typescript_Caixeiro-Viajante.svg" alt="Caixeiro-Viajante" /></a>
+<a href="https://github.com/joaoAngelo2/barbie"><img src=".github/cards/typescript_barbie.svg" alt="barbie" /></a>
 <!--END_SECTION:typescript-->
 </details>
 
@@ -44,10 +44,10 @@ _Nenhum repositório encontrado._
 <summary>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<big><big><strong>Java</strong></big></big>&nbsp;&nbsp;&nbsp;<img width="25" height="25" alt="Java" src="https://github.com/joaoAngelo2/joaoAngelo2/blob/main/images/Java.svg" /></summary>
 
 <!--START_SECTION:java-->
-<img src=".github/cards/java_compilador.svg" alt="compilador" />
-<img src=".github/cards/java_JavaEstudos.svg" alt="JavaEstudos" />
-<img src=".github/cards/java_GeoVoz.svg" alt="GeoVoz" />
-<img src=".github/cards/java_Pilha-Est-tica-Java.svg" alt="Pilha-Est-tica-Java" />
+<a href="https://github.com/joaoAngelo2/compilador"><img src=".github/cards/java_compilador.svg" alt="compilador" /></a>
+<a href="https://github.com/joaoAngelo2/JavaEstudos"><img src=".github/cards/java_JavaEstudos.svg" alt="JavaEstudos" /></a>
+<a href="https://github.com/joaoAngelo2/GeoVoz"><img src=".github/cards/java_GeoVoz.svg" alt="GeoVoz" /></a>
+<a href="https://github.com/joaoAngelo2/Pilha-Est-tica-Java"><img src=".github/cards/java_Pilha-Est-tica-Java.svg" alt="Pilha-Est-tica-Java" /></a>
 <!--END_SECTION:java-->
 </details>
 
@@ -55,10 +55,10 @@ _Nenhum repositório encontrado._
 <summary>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<big><big><strong>Android</strong></big></big>&nbsp;&nbsp;&nbsp;<img width="25" height="25" alt="Android" src="https://github.com/joaoAngelo2/joaoAngelo2/blob/main/images/kGcHSrcQvP.svg" /></summary>
 
 <!--START_SECTION:android-->
-<img src=".github/cards/android_compilador.svg" alt="compilador" />
-<img src=".github/cards/android_JavaEstudos.svg" alt="JavaEstudos" />
-<img src=".github/cards/android_GeoVoz.svg" alt="GeoVoz" />
-<img src=".github/cards/android_Pilha-Est-tica-Java.svg" alt="Pilha-Est-tica-Java" />
+<a href="https://github.com/joaoAngelo2/compilador"><img src=".github/cards/android_compilador.svg" alt="compilador" /></a>
+<a href="https://github.com/joaoAngelo2/JavaEstudos"><img src=".github/cards/android_JavaEstudos.svg" alt="JavaEstudos" /></a>
+<a href="https://github.com/joaoAngelo2/GeoVoz"><img src=".github/cards/android_GeoVoz.svg" alt="GeoVoz" /></a>
+<a href="https://github.com/joaoAngelo2/Pilha-Est-tica-Java"><img src=".github/cards/android_Pilha-Est-tica-Java.svg" alt="Pilha-Est-tica-Java" /></a>
 <!--END_SECTION:android-->
 </details>
 
