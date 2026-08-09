@@ -27,6 +27,7 @@
 <summary>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<big><big><strong>React</strong></big></big>&nbsp;&nbsp;&nbsp;<img width="25" height="25" alt="React" src="https://github.com/joaoAngelo2/joaoAngelo2/blob/main/images/React.svg" /></summary>
 
 <!--START_SECTION:react-->
+_Nenhum repositório encontrado._
 <!--END_SECTION:react-->
 </details>
 
@@ -34,6 +35,8 @@
 <summary>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<big><big><strong>TypeScript</strong></big></big>&nbsp;&nbsp;&nbsp;<img width="25" height="25" alt="TypeScript" src="https://github.com/joaoAngelo2/joaoAngelo2/blob/main/images/TypeScript.svg" /></summary>
 
 <!--START_SECTION:typescript-->
+<img src=".github/cards/typescript_Caixeiro-Viajante.svg" alt="Caixeiro-Viajante" />
+<img src=".github/cards/typescript_barbie.svg" alt="barbie" />
 <!--END_SECTION:typescript-->
 </details>
 
@@ -41,6 +44,10 @@
 <summary>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<big><big><strong>Java</strong></big></big>&nbsp;&nbsp;&nbsp;<img width="25" height="25" alt="Java" src="https://github.com/joaoAngelo2/joaoAngelo2/blob/main/images/Java.svg" /></summary>
 
 <!--START_SECTION:java-->
+<img src=".github/cards/java_compilador.svg" alt="compilador" />
+<img src=".github/cards/java_JavaEstudos.svg" alt="JavaEstudos" />
+<img src=".github/cards/java_GeoVoz.svg" alt="GeoVoz" />
+<img src=".github/cards/java_Pilha-Est-tica-Java.svg" alt="Pilha-Est-tica-Java" />
 <!--END_SECTION:java-->
 </details>
 
@@ -48,6 +55,10 @@
 <summary>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<big><big><strong>Android</strong></big></big>&nbsp;&nbsp;&nbsp;<img width="25" height="25" alt="Android" src="https://github.com/joaoAngelo2/joaoAngelo2/blob/main/images/kGcHSrcQvP.svg" /></summary>
 
 <!--START_SECTION:android-->
+<img src=".github/cards/android_compilador.svg" alt="compilador" />
+<img src=".github/cards/android_JavaEstudos.svg" alt="JavaEstudos" />
+<img src=".github/cards/android_GeoVoz.svg" alt="GeoVoz" />
+<img src=".github/cards/android_Pilha-Est-tica-Java.svg" alt="Pilha-Est-tica-Java" />
 <!--END_SECTION:android-->
 </details>
 
