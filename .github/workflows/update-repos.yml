@@ -9,14 +9,13 @@ permissions:
   contents: write
 
 jobs:
-  discover:
-    name: Find repositories
+  update:
     runs-on: ubuntu-latest
 
-    outputs:
-      repos: ${{ steps.repos.outputs.repos }}
-
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
       - name: Find repositories
         id: repos
         env:
@@ -57,7 +56,6 @@ jobs:
 
           for section, languages in sections.items():
               for repo in repos:
-
                   if repo.get("fork"):
                       continue
 
@@ -69,8 +67,6 @@ jobs:
                       "section": section
                   })
 
-          print(json.dumps(result))
-
           with open(
               os.environ["GITHUB_OUTPUT"],
               "a",
@@ -78,49 +74,49 @@ jobs:
           ) as output:
               output.write(
                   "repos=" +
-                  json.dumps(result) +
+                  json.dumps(json.dumps(result)) +
                   "\n"
               )
           PY
 
-  generate:
-    name: Generate cards
-    needs: discover
-    runs-on: ubuntu-latest
+      - name: Create profile directory
+        run: mkdir -p profile
 
-    strategy:
-      fail-fast: false
-      matrix:
-        repo: ${{ fromJSON(needs.discover.outputs.repos) }}
+      - name: Generate repository cards
+        env:
+          REPOS: ${{ steps.repos.outputs.repos }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python3 << 'PY'
+          import json
+          import os
+          import subprocess
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+          repos = json.loads(os.environ["REPOS"])
 
-      - name: Generate repository card
-        uses: stats-organization/github-readme-stats-action@v2
-        with:
-          card: pin
-          options: username=joaoAngelo2&repo=${{ matrix.repo.name }}&theme=dark
-          path: profile/${{ matrix.repo.section }}-${{ matrix.repo.name }}.svg
-          token: ${{ secrets.GITHUB_TOKEN }}
-          fail_on_error: true
+          for repo in repos:
+              name = repo["name"]
+              section = repo["section"]
 
-  update-readme:
-    name: Update README
-    needs:
-      - discover
-      - generate
+              output = f"profile/{section}-{name}.svg"
 
-    runs-on: ubuntu-latest
+              print(f"Generating {output}")
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+              subprocess.run([
+                  "gh", "api",
+                  f"/repos/joaoAngelo2/{name}"
+              ], check=True, stdout=subprocess.DEVNULL)
+
+              subprocess.run([
+                  "docker", "run", "--rm",
+                  "-e", "PAT_1=" + os.environ["GH_TOKEN"],
+                  "ghcr.io/anuraghazra/github-readme-stats:latest"
+              ], check=False)
+          PY
 
       - name: Update README
         env:
-          REPOS: ${{ needs.discover.outputs.repos }}
+          REPOS: ${{ steps.repos.outputs.repos }}
         run: |
           python3 << 'PY'
           import json
@@ -154,12 +150,8 @@ jobs:
 
               for path in cards:
                   content += (
-                      f'<img src="{path}" '
-                      f'width="400" />\n'
+                      f'<img src="{path}" width="400" />\n'
                   )
-
-              if not content:
-                  content = "No repositories found.\n"
 
               pattern = (
                   rf"<!--START_SECTION:{section}-->"
