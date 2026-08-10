@@ -16,7 +16,7 @@
     <img width="40" height="40" src="https://github.com/joaoAngelo2/joaoAngelo2/blob/main/images/icons8-gmail-novo.svg" />
   </a>
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  <a href="https://www.instagram.com/joao-nr">
+  <a href="https://www.instagram.com/joao__nr">
     <img width="40" height="40" src="https://github.com/joaoAngelo2/joaoAngelo2/blob/main/images/icons8-instagram.svg" />
   </a>
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
