@@ -31,6 +31,8 @@
 <summary>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<big><big><strong>Python</strong></big></big>&nbsp;&nbsp;&nbsp;<img width="25" height="25" alt="React" src="https://github.com/joaoAngelo2/joaoAngelo2/blob/main/images/python_spin.svg" /></summary>
 
 <!--START_SECTION:python-->
+<a href="https://github.com/joaoAngelo2/aplicador-linkedin"><img src=".github/cards/python_aplicador-linkedin.svg" alt="aplicador-linkedin" /></a>
+<a href="https://github.com/joaoAngelo2/oulad"><img src=".github/cards/python_oulad.svg" alt="oulad" /></a>
 <!--END_SECTION:python-->
 
 
