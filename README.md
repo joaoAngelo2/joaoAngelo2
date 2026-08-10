@@ -19,17 +19,24 @@
   <a href="https://www.instagram.com/joao-nr">
     <img width="40" height="40" src="https://github.com/joaoAngelo2/joaoAngelo2/blob/main/images/icons8-instagram.svg" />
   </a>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <a href="https://ifgoiano.edu.br/home/index.php">
+    <img width="40" height="40" src="https://github.com/joaoAngelo2/joaoAngelo2/blob/main/images/ifgoiano_6FF3E9.svg" />
+  </a>
 </p>
 
 <h2>📘&nbsp;&nbsp;Projects</h2>
 
 <details>
-<summary>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<big><big><strong>React</strong></big></big>&nbsp;&nbsp;&nbsp;<img width="25" height="25" alt="React" src="https://github.com/joaoAngelo2/joaoAngelo2/blob/main/images/React.svg" /></summary>
+<summary>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<big><big><strong>Python</strong></big></big>&nbsp;&nbsp;&nbsp;<img width="25" height="25" alt="React" src="https://github.com/joaoAngelo2/joaoAngelo2/blob/main/images/python_spin.svg" /></summary>
 
-<!--START_SECTION:react-->
-_Nenhum repositório encontrado._
-<!--END_SECTION:react-->
+<!--START_SECTION:python-->
+<!--END_SECTION:python-->
+
+
 </details>
+
+
 
 <details>
 <summary>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<big><big><strong>TypeScript</strong></big></big>&nbsp;&nbsp;&nbsp;<img width="25" height="25" alt="TypeScript" src="https://github.com/joaoAngelo2/joaoAngelo2/blob/main/images/TypeScript.svg" /></summary>
