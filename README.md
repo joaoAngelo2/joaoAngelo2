@@ -27,6 +27,8 @@
 
 <h2>💻&nbsp;&nbsp;Tech Stacks</h2>
 
+
+
 [![My Skills](https://skillicons.dev/icons?i=react,html,js,ts,java,spring,mysql,python,androidstudio)](https://skillicons.dev)
 
 <h2>📘&nbsp;&nbsp;Projects</h2>
