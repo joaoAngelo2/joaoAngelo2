@@ -25,6 +25,10 @@
   </a>
 </p>
 
+<h2>💻&nbsp;&nbsp;Tech Stacks</h2>
+
+[![My Skills](https://skillicons.dev/icons?i=react,html,js,ts,java,spring,mysql,python,androidstudio)](https://skillicons.dev)
+
 <h2>📘&nbsp;&nbsp;Projects</h2>
 
 <details>
@@ -76,3 +80,4 @@
 <!--START_SECTION:activity-->
 <img src=".github/cards/activity.svg" alt="activity log" />
 <!--END_SECTION:activity-->
+
