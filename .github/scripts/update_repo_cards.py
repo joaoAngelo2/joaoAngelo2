@@ -35,11 +35,12 @@ def get_last_committer_avatar(repo_name):
     return fetch_avatar_b64(f"https://github.com/{username}.png")
 
 lang_colors = {
-    "JavaScript": "#f1e05a",
-    "TypeScript": "#3178c6",
-    "Kotlin":     "#A97BFF",
-    "Java":       "#b07219",
-    "Python":     "#3572A5",
+    "JavaScript":       "#f1e05a",
+    "TypeScript":       "#3178c6",
+    "Kotlin":           "#A97BFF",
+    "Java":             "#b07219",
+    "Python":           "#3572A5",
+    "Jupyter Notebook": "#DA5B0B",
 }
 
 def make_svg(repo_name, description, language, stars, forks, avatar_data, width=340):
@@ -75,10 +76,9 @@ def make_svg(repo_name, description, language, stars, forks, avatar_data, width=
 repos = gh(f"https://api.github.com/users/{username}/repos?per_page=100&sort=updated")
 
 sections = {
-    "react":      {"langs": ["JavaScript", "TypeScript"], "keywords": ["react", "next", "vite"]},
-    "typescript": {"langs": ["TypeScript"],               "keywords": []},
-    "java":       {"langs": ["Java"],                     "keywords": []},
-    "android":    {"langs": ["Kotlin", "Java"],           "keywords": ["android"]},
+    "typescript": {"langs": ["TypeScript"],        "keywords": []},
+    "java":       {"langs": ["Java"],              "keywords": []},
+    "python":     {"langs": ["Python"],            "keywords": []},
 }
 
 os.makedirs(".github/cards", exist_ok=True)
@@ -94,18 +94,8 @@ for section, criteria in sections.items():
         lang  = repo.get("language") or ""
         name  = repo["name"]
         namel = name.lower()
-        lang_match = lang in criteria["langs"]
-        if section == "react":
-            desc_lower   = (repo.get("description") or "").lower()
-            topics       = repo.get("topics", [])
-            name_match   = any(kw in namel     for kw in criteria["keywords"])
-            desc_match   = any(kw in desc_lower for kw in criteria["keywords"])
-            topics_match = any(kw in topic      for kw in criteria["keywords"] for topic in topics)
-            if not (lang_match and (name_match or desc_match or topics_match)):
-                continue
-        else:
-            if not lang_match:
-                continue
+        if lang not in criteria["langs"]:
+            continue
 
         print(f"  Gerando card: {name}")
         avatar = get_last_committer_avatar(name)
