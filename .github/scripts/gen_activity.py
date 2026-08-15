@@ -1,4 +1,4 @@
-import urllib.request, json, re, os
+import urllib.request, json, re, os, sys
 from datetime import datetime, timezone
 
 username = "joaoAngelo2"
@@ -34,39 +34,85 @@ EVENT_TYPE = {
   "IssueCommentEvent":      ("COMMENT", "#8b949e"),
 }
 
+# DEBUG — mostra o payload dos primeiros PushEvents no log do Actions
+print("=== DEBUG PAYLOAD ===", file=sys.stderr)
+events_raw = gh(f"https://api.github.com/users/{username}/events/public?per_page=30")
+for e in events_raw[:5]:
+  if e["type"] == "PushEvent":
+    print(f"repo: {e['repo']['name']}", file=sys.stderr)
+    print(f"size: {e['payload'].get('size')}", file=sys.stderr)
+    print(f"distinct_size: {e['payload'].get('distinct_size')}", file=sys.stderr)
+    print(f"commits count: {len(e['payload'].get('commits', []))}", file=sys.stderr)
+    print(f"ref: {e['payload'].get('ref')}", file=sys.stderr)
+    if e['payload'].get('commits'):
+      print(f"last commit msg: {e['payload']['commits'][-1].get('message','')[:60]}", file=sys.stderr)
+    print("---", file=sys.stderr)
+print("=== FIM DEBUG ===", file=sys.stderr)
+
+events = events_raw
+
 def event_message(e):
   t = e["type"]
   repo = e["repo"]["name"].replace(f"{username}/", "")
+  repo_full = e["repo"]["name"]
   p = e.get("payload", {})
+
   if t == "PushEvent":
-    n = p.get("size", 0) or len(p.get("commits", []))
+    # Tenta pegar o total de commits por todas as formas possíveis
+    n = p.get("size") or p.get("distinct_size") or len(p.get("commits", []))
+
+    # Se ainda for 0, busca direto na API do repo
+    if not n:
+      try:
+        ref = p.get("ref", "").replace("refs/heads/", "")
+        data = gh(f"https://api.github.com/repos/{repo_full}/commits?sha={ref}&per_page=1")
+        n = 1
+      except:
+        n = 1
+
+    # Tenta pegar a mensagem do último commit
     commits = p.get("commits", [])
-    msg = commits[-1].get("message", "") if commits else ""
-    msg = msg.split("\n")[0][:35]
+    if commits:
+      msg = commits[-1].get("message", "").split("\n")[0][:35]
+    else:
+      # Busca a mensagem direto na API do repo
+      try:
+        ref = p.get("ref", "").replace("refs/heads/", "")
+        data = gh(f"https://api.github.com/repos/{repo_full}/commits?sha={ref}&per_page=1")
+        msg = data[0]["commit"]["message"].split("\n")[0][:35] if data else ""
+      except:
+        msg = ""
+
     return f"{n} commit{'s' if n != 1 else ''} to {repo}: {msg}"
+
   if t == "PullRequestEvent":
     pr = p.get("pull_request", {})
     return f"{p.get('action','')} #{pr.get('number','')} {pr.get('title','')[:30]}"
+
   if t == "IssuesEvent":
     issue = p.get("issue", {})
     return f"{p.get('action','')} #{issue.get('number','')} {issue.get('title','')[:30]}"
+
   if t == "PullRequestReviewEvent":
     pr = p.get("pull_request", {})
     return f"reviewed #{pr.get('number','')} in {repo}"
+
   if t == "WatchEvent":
     return f"starred {repo}"
+
   if t == "ForkEvent":
     return f"forked {repo}"
+
   if t == "CreateEvent":
     return f"created {p.get('ref_type','')} in {repo}"
+
   if t == "IssueCommentEvent":
     return f"commented on #{p.get('issue',{}).get('number','')} in {repo}"
+
   return repo
 
 def esc(s):
   return str(s).replace("&","&amp;").replace("<","&lt;").replace(">","&gt;").replace('"',"&quot;")
-
-events = gh(f"https://api.github.com/users/{username}/events/public?per_page=30")
 
 lines = []
 for e in events:
