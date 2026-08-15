@@ -39,8 +39,9 @@ def event_message(e):
   repo = e["repo"]["name"].replace(f"{username}/", "")
   p = e.get("payload", {})
   if t == "PushEvent":
-    n = len(p.get("commits", []))
-    msg = p.get("commits", [{}])[-1].get("message", "")
+    n = p.get("size", 0) or len(p.get("commits", []))
+    commits = p.get("commits", [])
+    msg = commits[-1].get("message", "") if commits else ""
     msg = msg.split("\n")[0][:35]
     return f"{n} commit{'s' if n != 1 else ''} to {repo}: {msg}"
   if t == "PullRequestEvent":
